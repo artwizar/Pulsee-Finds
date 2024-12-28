@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Confirm Order</title>
+</head>
+<body>
+    <h1>Confirm Your Order</h1>
+    <div id="OrderSummary"></div>
+    <button id="BuyBtn">Buy</button>
+
+    <script>
+        const cartInfo = JSON.parse(localStorage.getItem("checkoutInfo")) || [];
+        const userDetails = JSON.parse(localStorage.getItem("userDetails")) || {};
+        const orderSummary = document.getElementById("OrderSummary");
+
+        // Display user details
+        orderSummary.innerHTML = `
+            <h2>User Details:</h2>
+            <p>Name: ${userDetails.name}</p>
+            <p>Email: ${userDetails.email}</p>
+            <p>Address: ${userDetails.address}</p>
+        `;
+
+        // Display cart info
+        cartInfo.forEach(item => {
+            const itemDiv = document.createElement("div");
+            itemDiv.innerHTML = `
+                <img src="${item.image}" alt="${item.name}" width="100">
+                <p>${item.name}</p>
+                <p>Quantity: ${item.quantity}</p>
+                <p>Total: $${item.price.toFixed(2)}</p>
+            `;
+            orderSummary.appendChild(itemDiv);
+        });
+
+        // Handle "Buy" button click
+        document.getElementById("BuyBtn").addEventListener("click", () => {
+            const emailContent = `
+                User Details:
+                Name: ${userDetails.name}
+                Email: ${userDetails.email}
+                Address: ${userDetails.address}
+
+                Cart Details:
+                ${cartInfo.map(item => `${item.name} - Quantity: ${item.quantity}, Total: $${item.price.toFixed(2)}`).join("\n")}
+            `;
+
+            // Send the email (replace with a real email API)
+            console.log("Email Sent:", emailContent);
+
+            // Notify the user
+            alert("Your order has been received and is being processed!");
+            window.location.href = "thankyou.html"; // Navigate to a thank you page
+        });
+    </script>
+</body>
+</html>

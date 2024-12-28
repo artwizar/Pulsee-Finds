@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Thank You</title>
+    <style>
+        body{
+            display: grid;
+            align-items: center;
+            justify-content: center;
+            background: #2bf1b6;
+            color: white;
+            text-align: center;
+        }
+        button{
+            margin: auto;
+            width: fit-content;
+            background-color: rgb(0, 140, 196);
+            color: white;
+            border: none;
+            padding: 20px;
+            position: relative;
+            border-radius: 20px;
+        }
+        button::before{
+            content: '';
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            z-index: -1;
+            padding: 2.2px;
+            top: 50%;
+            left: 50%;
+            translate: -50% -50%;
+            filter: blur(5px);
+            background-image: Conic-gradient(orange,blue);
+            border-radius: 20px;
+        }
+        button::after{
+            content: '';
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            z-index: -2;
+            padding: 2.2px;
+            top: 50%;
+            left: 50%;
+            translate: -50% -50%;
+            background-image: Conic-gradient(orange,blue);
+            border-radius: 20px;
+        }
+        h1{
+            font-size: 2.2em;
+        }
+        p{
+            font-weight: 1000;
+            font-size: 1.2em;
+        }
+        @keyframes spin {
+            from{
+                
+            }
+            to{}
+        }
+    </style>
+</head>
+<body>
+    <h1>🎉🥳Thank You for Your Order!🎉🥳</h1>
+    <h1 style="margin: 0;">🥂</h1>
+    <p>Your order is being processed. You will receive a confirmation email shortly.</p>
+
+
+    <button>Buy More Products</button>
+</body>
+</html>

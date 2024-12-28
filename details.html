@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Display</title>
+    <link rel="stylesheet" href="Styles/product.css">
+</head>
+<body>
+
+    <div class="Content">
+        <div class="main_display">
+            <div class="dis-left">
+                <abbr title="Back" id="Remove_Display">
+                    <img src="icons/icon-arrow-down.svg" id="icon">
+                </abbr>
+                <div class="dis_img">
+                    <img src="" alt="">
+                </div>
+            </div>
+            <div class="dis-right">
+                <div class="dis-name">
+                    Louis Vuitton-inspired Sneakers
+                </div>
+                <div class="dis-des">
+                    <p></p>
+                </div>
+                <div class="dis-price">
+                    <!-- <h1>Total Price:</h1> -->
+                    <img src="icons/Coins.png" alt="">
+                    <h1>2500 </h1>
+                    <h2>.Ksh</h2>
+                </div>
+                <div class="dis-btn">
+                    <button class="addToCart" >Add to cart
+                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"/>
+                        </svg>
+                    </button>
+                    <button id="buyNow" class="left_btn">Buy Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    let Carts = [];
+    let Items = [];
+    let  Remove_Display = document.getElementById('Remove_Display');
+    
+
+    function innitApp(){
+            fetch("json/products.json")
+            .then(response => response.json())
+            .then(data => {
+                Items = data;
+    
+                AddDataToDetails();
+            });
+
+            if(localStorage.getItem('cart')){
+                Carts = JSON.parse(localStorage.getItem('cart'));
+            }
+
+        }innitApp();
+        
+    function AddDataToDetails(){
+            let Content = document.querySelector(".Content");
+
+            let productId = new URLSearchParams(window.location.search).get('id');
+            let ThisProduct = Items.filter(data => {
+                return data.id == productId
+            })[0];
+            if(!ThisProduct){
+                window.location.href = "/";
+            }
+            Content.querySelector(".dis_img img").src =`images/${ThisProduct.image}`;
+            Content.querySelector(".dis-name").innerText = ThisProduct.name;
+            Content.querySelector(".dis-price h1").innerText = ThisProduct.price;
+            Content.querySelector(".dis-des p").innerText = ThisProduct.description;
+        }
+
+
+    Remove_Display.addEventListener("click", () => window.location.href = "/");
+
+
+
+    let addToCart = document.querySelector('.addToCart');
+
+    addToCart.addEventListener("click", event => {
+    let product_id = new URLSearchParams(window.location.search).get('id');
+        AddToCart(product_id);
+})
+
+    function AddToCart(product_id){
+    let PositionThisProductInCart = Carts.findIndex((value) => value.product_id == product_id)
+    if(Carts.length <=0){
+        Carts = [{
+            product_id: product_id,
+            quantity:1
+        }]
+    }else if(PositionThisProductInCart < 0){
+        Carts.push({
+            product_id:product_id,
+            quantity:1
+        })
+    }else{
+        Carts[PositionThisProductInCart].quantity = Carts[PositionThisProductInCart].quantity + 1;
+    }
+    console.log(Carts)
+    // AddCartToHtml();
+    AddCartToMemory();
+    CalculateTotalPrice();
+}
+
+    function AddCartToMemory(){
+    const validCarts = Carts.filter(item => item.product_id && item.quantity && item.quantity > 0);
+
+    localStorage.setItem('cart', JSON.stringify(validCarts));
+}
+
+    function changeQuantity(product_id,type){
+    let positionItemInCart = Carts.findIndex((value) => value.product_id == product_id);
+    if(positionItemInCart >= 0){
+        switch(type){
+            case 'Increase':
+                Carts[positionItemInCart].quantity = Carts[positionItemInCart].quantity + 1;
+                break;
+
+            default:
+                let valueChange = Carts[positionItemInCart].quantity -1;
+                if(valueChange > 0){
+                    Carts[positionItemInCart].quantity = valueChange;
+                }else{
+                    Carts.splice(positionItemInCart, 1);
+                }
+                break;
+        }
+    }
+    AddCartToMemory();
+    AddCartToHtml();
+    CalculateTotalPrice();
+}
+
+    document.getElementById('buyNow').addEventListener('click', () => {
+        let productId = new URLSearchParams(window.location.search).get('id');
+            let ThisProduct = Items.filter(data => {
+                return data.id == productId
+            })[0];
+            localStorage.removeItem('checkoutInfo');
+
+            let checkoutInfo = {
+                name:ThisProduct.name,
+                image:ThisProduct.image,
+                quantity: 1,
+                price:ThisProduct.price
+            }
+
+        localStorage.setItem('checkoutInfo', JSON.stringify(checkoutInfo));
+        window.location.href = 'Account.html';
+    })
+
+
+</script>
+</body>
+</html>

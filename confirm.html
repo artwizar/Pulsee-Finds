@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oder confirmation page</title>
+    <style>
+        :root{
+            --bcg-color:rgb(70, 171, 211);
+            --text-color:rgb(255, 255, 255);
+
+            --btn-color:white;
+            --background-color: #63c6df;
+
+        }
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background: var(--background-color);
+        }
+        .body{
+            /* display: grid; */
+            justify-content: center;
+            align-items: center;
+            /* grid-template-rows: max-content max-content  max-content max-content 1fr; */
+            background: var(--background-color);
+            padding: 0 10px;
+            margin: auto;
+            width: max-content;
+            cursor:default;
+            color: var(--btn-color);
+            height: 100vh;
+            border-left: 1px solid;
+            border-right: 1px solid;
+            /* color:val(--text-color); */
+        }
+        #heading{
+            font-weight: bolder;
+            line-height: 40px;
+            letter-spacing: 6px;
+            /* color: var(--text-color); */
+            background-color: var(--bcg-color);
+            text-align: center;
+        }
+        .oder-price{
+            background-color: var(--bcg-color);
+        }
+        .con-text{
+            background-color: var(--bcg-color-);
+            color: #333;
+            font-weight:500;
+            font-size: large;
+            padding: 5px 0;
+        }
+        .oder-price .total-items , .total-price{ 
+            display: flex;
+            justify-content: space-between;
+            padding: 3px 5px;
+            font-weight: 800;
+            font-size: larger;
+            /* color: var(--text-color); */
+        }
+        .oder-price .total-items #totalItems{
+            padding: 1px 2px;
+            font-weight: 700;
+        }
+        .oder-price .total-price{ 
+            border-top: 1px solid var(--background-color);
+            border-bottom: 1px solid var(--background-color);
+            font-size: small;
+        }
+        .user-details{
+            background-color: var(--bcg-color);
+        }
+        .user-details .user-name{
+            font-weight: 550;
+            color: var(--text-color);
+            padding: 0 5px;
+        }
+        .user-details p{
+            font-size :16px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            color: #333;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        /* .order-summary{
+            overflow: auto;
+        } */
+        .order-summary .oder{
+            background: var(--bcg-color);
+            height: max-content;
+            margin-bottom: 10px;
+            /* color: var(--text-color); */
+        }
+        .order-summary .oder .container{
+            display: grid;
+            grid-template-columns: 1fr 4fr 1fr;
+            column-gap: 10px;
+            border: 1px solid var(--btn-color);
+            width: 50vw;
+        }
+        .order-summary .oder .container .img-con{
+            width: 150px;
+            height: 110px;
+        }
+        .order-summary .oder .container .img-con img{
+            width: 100%;
+            height: 100%;
+        }
+        .order-summary .oder .container .title , .price-quant{
+            display: grid;
+            grid-template-rows: 2fr 1fr;
+            font-size: 20px;
+        }
+        .order-summary .oder .container .title p{
+            font-weight: 800;
+        }
+        .order-summary .oder .container .price-quant{
+            font-weight: bold;
+        }
+        .order-summary .oder .container .color,.quant{
+            color: #333;
+        }
+        .btn{
+            display: grid;
+            align-items: center;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        .btn button{
+            border: none;
+            padding: 20px;
+            background-color: #fff;
+            color: rgb(0, 140, 196);
+            border: 2px solid rgb(0, 140, 196);
+            font-weight: 600;
+            font-size: large;
+            border-radius: 10px;
+            margin-bottom: 5px;
+            cursor: pointer;            
+            &:hover{
+                color: white;
+                background: rgb(0, 140, 196);
+                border: 2px solid white;
+            }
+
+            &:active{
+                background-color: rgb(22, 189, 255);
+                color: white;
+            }
+        }
+        @media screen and (max-width:884px) {
+            .order-summary .oder .container{
+                width: 80vw;
+            }
+        }
+        @media screen and (max-width:428px) {
+            .order-summary .oder .container{
+                width: 100vw;
+            }
+        }
+        @media screen and (max-width:360px) {
+            .order-summary .oder .container{
+                width: 120vw;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="body">
+    <h2 id="heading">CONFIRM YOUR ODER</h2>
+
+    <h2 class="con-text">Order Summary</h2>
+    <div class="oder-price">
+        <div class="total-items">
+            <div class="item">
+                Item's Total (<span id="totalItems"></span>)
+            </div>
+            <div class="item-price">
+                Ksh <span id="itemsPrice"></span>
+            </div>
+        </div>
+        <div class="total-price">
+            <h1>
+                Total
+            </h1>
+            <h2>
+                Ksh <span id="TotalPrice"></span>
+            </h2>
+        </div>
+    </div>
+
+    <h1 class="con-text">Customer Details</h1>
+    <div class="user-details">
+        <p class="user-name"></p>
+        <p class="userDetails"></p>
+    </div>
+
+    <h1 class="con-text">Your Oder</h1>
+    <div class="order-summary">
+        <div class="oder">
+            <!-- <div class="container">
+                <div class="img-con">
+                    <img src="images/Brown_Leather_Jacket.jpg" alt="">
+                </div>
+                <div class="title">
+                    <p>
+                        Brown Leather Jacket
+                    </p>
+                    <div class="color">
+                        brown
+                    </div>
+                </div>
+                <div class="price-quant">
+                    <div class="price">
+                        ksh 5000
+                    </div>
+                    <div class="quant">
+                        x <span>1</span>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+
+    <div class="btn">
+        <button id="PlaceOderBtn">Place oder</button>
+    </div>
+</div>
+</body>
+<script>
+    let orderSummary = document.querySelector('.order-summary');
+    let checkoutInfo = JSON.parse(localStorage.getItem('checkoutInfo'));
+    let userDetails = JSON.parse(localStorage.getItem('userDetails'));
+    let Price = JSON.parse(localStorage.getItem('Price'));
+    let Quantity = JSON.parse(localStorage.getItem('Quantity'));
+
+    
+    document.querySelector('.user-name').innerText = userDetails.name;
+    document.querySelector('.userDetails').innerText = `${userDetails.county}-${userDetails.town}-${userDetails.number}`;
+
+    if(checkoutInfo.forEach === undefined){
+
+        document.getElementById('totalItems').innerText = checkoutInfo.quantity;
+        document.getElementById('itemsPrice').innerText = checkoutInfo.price.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits: 2});
+        document.getElementById('TotalPrice').innerText = checkoutInfo.price.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits: 2});
+
+
+        let container = document.createElement('div');
+        container.classList.add('oder');
+
+        container.innerHTML = `
+        <div class="container">
+                <div class="img-con">
+                        <img src="images/${checkoutInfo.image}" alt="">
+                </div>
+                <div class="title">
+                    <p>
+                        ${checkoutInfo.name}
+                    </p>
+                    <div class="color">
+                        
+                    </div>
+                </div>
+                <div class="price-quant">
+                    <div class="price">
+                        ksh ${checkoutInfo.price.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits: 2})}
+                    </div>
+                    <div class="quant">
+                        x <span>${checkoutInfo.quantity}</span>
+                    </div>
+                </div>
+        </div>
+        `;
+        orderSummary.appendChild(container);
+
+    }else{
+
+        document.getElementById('totalItems').innerText = Quantity;
+        document.getElementById('itemsPrice').innerText = Price.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits: 2});
+        document.getElementById('TotalPrice').innerText = Price.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits: 2});
+    
+
+        checkoutInfo.forEach((item) => {
+            let container = document.createElement('div');
+            container.classList.add('oder');
+    
+            container.innerHTML = `
+            <div class="container">
+                    <div class="img-con">
+                            <img src="${item.image}" alt="">
+                    </div>
+                    <div class="title">
+                        <p>
+                            ${item.name}
+                        </p>
+                        <div class="color">
+                            
+                        </div>
+                    </div>
+                    <div class="price-quant">
+                        <div class="price">
+                            ksh ${item.price.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits: 2})}
+                        </div>
+                        <div class="quant">
+                            x <span>${item.quantity}</span>
+                        </div>
+                    </div>
+            </div>
+            `;
+    
+            orderSummary.appendChild(container);
+        });
+    }
+    
+    
+    
+    
+    
+    document.getElementById('PlaceOderBtn').addEventListener('click', () => {
+        const emailContent = `
+                Customer Details:
+                Name: ${userDetails.name}
+                Number: ${userDetails.number}
+                Email: ${userDetails.email}
+                County: ${userDetails.county}
+                Town: ${userDetails.town}
+
+                Cart Details:
+                ${checkoutInfo.map(item => `${item.name} - Quantity: ${item.quantity},  Total: $ ${item.price.toFixed(2)}`).join("\n")}
+        `;
+        emailjs.send("service_id","template_id",emailContent)
+        .then(response => {
+            
+            window.alert('Your oder has been received and is being processed!');
+
+            localStorage.removeItem('checkoutInfo');
+            localStorage.removeItem('cart');
+
+            window.location = 'thankyou.html';
+        })
+        .catch(error => {
+            console.error("Failed to send email",error);
+            alert('Something went wrong please try again');
+        })
+
+
+    })
+
+</script>
+</html>
